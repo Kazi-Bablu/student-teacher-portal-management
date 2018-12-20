@@ -11,8 +11,12 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    {{--<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('/font-awesome/css/font-awesome.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('main.css')}}"/>
+
+
+
 </head>
 <body>
 
@@ -58,10 +62,10 @@
 <section>
   <div class="search-option">
       <div class="row">
-          <div class="col-md-7 col-md-offset-1">
+          <div class="col-md-8 col-md-offset-1">
               <input type="text" class="form-control" placeholder="please search with class">
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
               <div class="btn-group" role="group">
                   <button type="button" class="btn btn-primary">Search</button>
               </div>
@@ -76,7 +80,7 @@
 
 {{--wall section for button--}}
 <div class="row">
-    <div class="col-md-offset-1  col-md-8">
+    <div class="col-md-offset-1  col-md-9">
         <div class="well">
             <div class="btn-group" role="group">
                 <a href="{{url('/')}}" class="btn btn-default" role="button">Teacher</a>
@@ -90,10 +94,10 @@
 {{--{{dd($locations )}}--}}
 <section>
   <div class="location-list">
-      <div class="col-md-8 col-md-offset-1">
+      <div class="col-md-9 col-md-offset-1">
           <ul class="list-group">
               @foreach($locations as $location)
-                  <li class="list-group-item"><a href=""><i class="fas fa-list">{{$location  ->location_name}}</i></a></li>
+                  <li class="list-group-item"><i class="fa fa-list"> <a href="">{{$location  ->location_name}}</a></i></li>
               @endforeach
                       {{--{{$locations->render()}}--}}
           </ul>

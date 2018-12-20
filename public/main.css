@@ -13,10 +13,18 @@
 }*/
 
 .location-list ul {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-flow: wrap column;
-    flex-flow: wrap column;
-    max-height: 150px;
+    display: block;
+    /*display: -ms-flexbox;*/
+    /*display: -webkit-flex;*/
+    /*display: flex;*/
+    /*-webkit-flex-flow: wrap column;*/
+    /*flex-flow: wrap column;*/
+    /*max-height: 150px;*/
+}
+.location-list ul li {
+    float: left;
+    width: 50%;
+}
+.location-list ul li a{
+    text-decoration: none;
 }
