@@ -29,6 +29,7 @@
                 @endif
                 @if(auth()->user()->user_role == 'Teacher' || auth()->user()->user_role == 'Admin')
                 <th>Looking</th>
+                <th>Available sit</th>
                 @endif
                 <th>Expected Amount</th>
                 <th>Days</th>
@@ -47,6 +48,7 @@
                     @endif
                     @if(auth()->user()->user_role == 'Teacher' || auth()->user()->user_role == 'Admin')
                          <td>{{$post->looking_for}}</td>
+                        <td>{{$post->available_sit}}</td>
                     @endif
                     <td>{{$post->expected_amount}}</td>
                     <td>{{$post->days}}</td>

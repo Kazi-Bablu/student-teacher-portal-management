@@ -61,6 +61,13 @@
                                     </select>
                                     <p class="help-block">{{$errors->first('teacher_type')}}</p>
                                 </div>
+
+                                <div class="form-group {{$errors->has('available_sit')?'has-error':''}}">
+                                    <label>Available Sit</label>
+                                    <input type="number" name="available_sit" class="form-control" value="{{$postById->available_sit}}"/>
+                                    <p class="help-block">{{$errors->first('available_sit')}}</p>
+                                </div>
+
                             @endif
 
 

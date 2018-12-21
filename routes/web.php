@@ -5,6 +5,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('404',function (){
+   return view('404');
+});
 
 Auth::routes();
 Route::get('/verifyemail/{token}', 'Auth\RegisterController@verify');
@@ -34,5 +37,12 @@ Route::get('/post/delete/{id}/delete','PostController@destroy');
 
 /*font end route*/
 Route::get('/','IndexController@create');
+Route::get('teacher/details/post/{id}/view','FontendController@teacherPostDetails')->name('detailsTeacherPost');
+Route::get('/teacher/search','IndexController@teacherSearch');
+
+// font end  student route
+Route::get('/student','StudentIndexController@create');
+Route::get('student/details/post/{id}/view','StudentIndexController@studentPostDetails')->name('detailsStudentPost');
+Route::get('/student/search','StudentIndexController@studentSearch');
 
 

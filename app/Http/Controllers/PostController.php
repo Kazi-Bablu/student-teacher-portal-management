@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Location;
+use App\Mail\SendNotificationToStudent;
 use App\Mail\SendNotificationToTeacher;
 use App\Post;
 use App\User;
@@ -32,7 +33,8 @@ class PostController extends Controller
                     'posts.experience',
                     'posts.subject',
                     'locations.location_name',
-                    'users.name'
+                    'users.name',
+                    'posts.available_sit'
                 )->get();
         }else{
             $posts=Post::join('locations','locations.id','posts.location_id')
@@ -48,7 +50,8 @@ class PostController extends Controller
                     'posts.experience',
                     'posts.subject',
                     'locations.location_name',
-                    'users.name'
+                    'users.name',
+                    'posts.available_sit'
                 )->get();
         }
         return view('post.view',compact('posts'));
@@ -82,7 +85,8 @@ class PostController extends Controller
                 'class' => 'required',
                 'location_id' => 'required',
                 'experience' => 'required',
-                'subject' => 'required'
+                'subject' => 'required',
+              //  'available_sit' => 'required'
             ]);
         }else{
             $this->validate($request, [
@@ -99,6 +103,7 @@ class PostController extends Controller
         $post= new Post();
         $post->teacher_type=$request->teacher_type;
         $post->looking_for=$request->looking;
+        $post->available_sit=$request->available_sit;
         $post->expected_amount=$request->expected_amount;
         $post->days=$request->days;
         $post->class_name=$request->class;
@@ -158,9 +163,38 @@ class PostController extends Controller
      * send notification to student
      */
 
-    public function sendEveryStudentNotification($locationId,$Post)
+    public function sendEveryStudentNotification($locationId,$post)
     {
+        $userInfo = User::join('locations','locations.id','users.location_id')
+            ->where('users.user_role','=','Student')
+            ->where('users.verified','=','1')
+            ->where('users.location_id',$locationId)
+            ->select(
+                'users.email'
+            )->get();
 
+        $postById = Post::join('locations','locations.id','posts.location_id')
+            ->join('users','users.id','posts.created_by')
+            ->where('posts.id',$post->id)
+            ->select(
+                'posts.looking_for',
+                'posts.expected_amount',
+                'posts.days',
+                'locations.location_name',
+                'users.phone_number',
+                'posts.class_name',
+                'posts.experience',
+                'posts.subject',
+                'users.name',
+                'posts.available_sit'
+            )->first();
+
+      //  dd($postById);
+
+        foreach ($userInfo as $email){
+            Mail::to($email->email)
+                ->send(new SendNotificationToStudent($postById));
+        }
     }
 
     /**
@@ -204,7 +238,8 @@ class PostController extends Controller
                 'class' => 'required',
                 'location_id' => 'required',
                 'experience' => 'required',
-                'subject' => 'required'
+                'subject' => 'required',
+                'available_sit' => 'required'
             ]);
         }else{
             $this->validate($request, [
@@ -221,6 +256,7 @@ class PostController extends Controller
         $postById = Post::find($id);
         $postById->teacher_type=$request->teacher_type;
         $postById->looking_for=$request->looking;
+        $postById->available_sit=$request->available_sit;
         $postById->expected_amount=$request->expected_amount;
         $postById->days=$request->days;
         $postById->class_name=$request->class;

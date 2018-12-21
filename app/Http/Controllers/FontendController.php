@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Location;
 use App\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class FontendController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,8 +25,7 @@ class IndexController extends Controller
      */
     public function create()
     {
-        $locations = Location::all();
-        return view('welcome',compact('locations'));
+        //
     }
 
     /**
@@ -85,33 +84,33 @@ class IndexController extends Controller
         //
     }
 
-    /**
-     * student page route
-     */
-    public function studentPage()
-    {
-        return view('studentIndex');
-    }
+     /**
+      * show teacher details post
+      */
+     public function teacherPostDetails($id)
+     {
+         $teachers = Post::join('locations','locations.id','posts.location_id')
+             ->join('users','users.id','posts.created_by')
+             ->where('posts.location_id',$id)
+             ->where(function($query){
+                 return $query
+                     ->where('users.user_role','Teacher')
+                     ->where('posts.created_at','>=',Carbon::now()->startOfMonth());
+             })->select(
+                 'users.name',
+                         'locations.location_name',
+                         'posts.looking_for',
+                         'posts.expected_amount',
+                         'posts.days',
+                         'posts.class_name',
+                         'posts.experience',
+                         'posts.subject',
+                         'users.phone_number',
+                         'users.name',
+                         'users.last_level_education'
+             )->get();
+        // dd($teachers);
+             return view('teacherDetails',compact('teachers'));
 
-    /**
-     * teacher
-     * search
-     */
-    public function teacherSearch(Request $request)
-    {
-
-        $teachers = Post::join('locations','locations.id','posts.location_id')
-            ->join('users','users.id','posts.created_by')
-            ->where('users.user_role','Teacher')
-            ->orderBy('class_name');
-        $class_name=$request->input('class_name');
-
-        if(!empty($class_name))
-        {
-            $teachers->where('posts.class_name','LIKE','%'.$class_name.'%');
-        }
-        $teachers=$teachers->get();
-
-        return view('teacherDetails',compact('teachers'));
-    }
+     }
 }

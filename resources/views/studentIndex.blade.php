@@ -60,20 +60,20 @@
 {{--search section--}}
 
 <section>
-  <div class="search-option">
-      <div class="row">
-          {!! Form::open(['url'=>'/teacher/search','method'=>'GET']) !!}
-          <div class="col-md-8 col-md-offset-1">
-              <input type="text" class="form-control" name="class_name" placeholder="Please search with class">
-          </div>
-          <div class="col-md-3">
-              <div class="btn-group" role="group">
-                  <button type="submit" class="btn btn-primary">Search</button>
-              </div>
-          </div>
-          {!! Form::close() !!}
-      </div>
-  </div>
+    <div class="search-option">
+        <div class="row">
+            {!! Form::open(['url'=>'/student/search','method'=>'GET']) !!}
+            <div class="col-md-8 col-md-offset-1">
+                <input type="text" name="class_name" class="form-control" placeholder="Please search with class">
+            </div>
+            <div class="col-md-3">
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
 </section>
 
 {{--search section end--}}
@@ -95,19 +95,19 @@
 {{--list section--}}
 {{--{{dd($locations )}}--}}
 <section>
-  <div class="location-list">
-      <div class="col-md-9 col-md-offset-1">
-          <ul class="list-group">
-              @foreach($locations as $location)
-                  <li class="list-group-item"><i class="fa fa-list"> <a href="{{route('detailsTeacherPost', $location->id)}}">{{$location->location_name}}</a></i></li>
+    <div class="location-list">
+        <div class="col-md-9 col-md-offset-1">
+            <ul class="list-group">
+                @foreach($locations as $location)
+                    <li class="list-group-item"><i class="fa fa-list"> <a href="{{route('detailsStudentPost', $location->id)}}">{{$location->location_name}}</a></i></li>
 
-                {{--<li class="list-group-item"><a href="{{route('detailsTeacherPost', $location->id)}}"><i class="fas fa-list">{{$location  ->location_name}}</i></a></li>--}}
+                    {{--<li class="list-group-item"><a href="{{route('detailsTeacherPost', $location->id)}}"><i class="fas fa-list">{{$location  ->location_name}}</i></a></li>--}}
 
-              @endforeach
-                      {{--{{$locations->render()}}--}}
-          </ul>
-      </div>
-  </div>
+                @endforeach
+                {{--{{$locations->render()}}--}}
+            </ul>
+        </div>
+    </div>
 </section>
 {{--list section--}}
 

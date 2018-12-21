@@ -54,13 +54,24 @@
                             @if(auth()->user()->user_role == 'Teacher' || auth()->user()->user_role == 'Admin')
                                 <div class="form-group {{$errors->has('looking')?'has-error':''}}">
                                     <label>Looking For</label>
-                                    <select name="looking" id="looking"
+                                    <select name="looking" id="looking" onchange="decideView(this.value)"
                                             class="form-control selectpicker">
                                         <option value="Tuition">Tuition</option>
+                                        <option value="Batch">Batch</option>
                                     </select>
                                     <p class="help-block">{{$errors->first('teacher_type')}}</p>
                                 </div>
+
+                                <div class="form-group {{$errors->has('available_sit')?'has-error':''}}">
+                                    <label>Available Sit</label>
+                                    <input type="number" name="available_sit" id="available_sit" class="form-control" value="{{old('available_sit')}}">
+                                    <p class="help-block">{{$errors->first('available_sit')}}</p>
+                                    <p class="help-block">If you are looking for batch then enter available sit</p>
+                                </div>
+
                             @endif
+
+
 
 
                             <div class="form-group {{$errors->has('expected_amount')?'has-error':''}}">
